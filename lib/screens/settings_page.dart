@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -21,13 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const Text(
                 "ตั้งค่า",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 20),
@@ -35,7 +32,8 @@ class _SettingsPageState extends State<SettingsPage> {
               /// 🔊 เสียงแจ้งเตือน
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: SwitchListTile(
                   value: soundEnabled,
                   onChanged: (value) {
@@ -54,7 +52,8 @@ class _SettingsPageState extends State<SettingsPage> {
               /// ⏱ เวลาเลื่อนแจ้งเตือน
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -87,10 +86,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Text(
                           "${snoozeMinutes.toInt()} นาที",
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -101,7 +101,8 @@ class _SettingsPageState extends State<SettingsPage> {
               /// 🔔 การแจ้งเตือน
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: const Padding(
                   padding: EdgeInsets.all(16),
                   child: Column(
@@ -131,7 +132,8 @@ class _SettingsPageState extends State<SettingsPage> {
               /// ℹ️ เกี่ยวกับแอป
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: const Padding(
                   padding: EdgeInsets.all(16),
                   child: Column(
@@ -163,9 +165,11 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 20),
 
               /// 🚪 ออกจากระบบ
+              /// 🚪 ออกจากระบบ
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: ListTile(
                   leading: const Icon(Icons.logout, color: Colors.red),
                   title: const Text(
@@ -180,8 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text("ยืนยันออกจากระบบ"),
-                        content: const Text(
-                            "คุณต้องการออกจากระบบใช่หรือไม่?"),
+                        content: const Text("คุณต้องการออกจากระบบใช่หรือไม่?"),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -191,11 +194,16 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.pop(context); // ปิด dialog
 
-                              // กลับหน้าแรกของแอป
-                              Navigator.of(context)
-                                  .popUntil((route) => route.isFirst);
+                              // 🔥 ไปหน้า Login และล้าง stack ทั้งหมด
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                                (route) => false,
+                              );
                             },
                             child: const Text(
                               "ออกจากระบบ",
